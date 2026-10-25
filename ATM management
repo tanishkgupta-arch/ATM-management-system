@@ -1,0 +1,105 @@
+# ATM system
+# ATM management system have 4 procces-view balance, withdraw money, deposit money and exit
+# flow chart of ATM mangement system
+# first of all we will start the program
+# we will add ATM pin password
+# if it is coorect it will allow all the 4 steps
+# if it is wrong it will ask you to take an exit
+
+
+# Create a ATM management system that performs all the 4 operations
+
+# import module
+import random
+
+# create class by the name account
+class Account:
+    def __init__(self,id, balance=0):
+        self.id=id
+        self.balance=balance
+    def getId(self):
+        return self.id
+    def getbalance(self):
+        return self.balance
+    def withdraw(self,amount):
+        if amount<= self.balance:
+            self.balance-=amount
+            return True
+        return False
+    def deposit(self,amount):
+        self.balance+= amount
+
+# create main function
+
+def main():
+    accounts=[]
+    for i in range(1000,10000):
+        account=Account(i,0)
+        accounts.append(account)
+
+
+# create ATM procces finding account
+    while True:
+        id=int(input("enter valid 4 digit pin"))
+        while id < 1000 or id > 9999:
+               id = int(input("invalid pin"))
+        accountObj = None
+        for acc in accounts:
+            if acc.getId()==id:
+                accountObj=acc
+                break
+        if accountObj is None:
+            print("account not found")
+            continue
+               
+               
+
+#create loop for ATM options
+        while True:
+            print("1. view balance 2. withdraw 3. deposit 4. exit")
+            selection=int(input(" enter your selection"))
+
+# view balance
+            if selection==1:
+                print(f"your balance is:{accountObj.getbalance()}")
+#withdraw
+            elif selection==2:
+                amt=float(input("enter amount to withdraw"))
+                ver_withdraw=input(f"is this correct amount,{amt}? (yes/no)")
+                if ver_withdraw.lower()=="yes":
+                    if accountObj.withdraw (amt):
+                        print(f"\nwithdraw succsessful.updated balance:{accountObj.getbalance()}")
+                    else:
+                        print("insufficient balance")
+                else:
+                    print("transaction cancelled")
+                    
+                
+
+
+# Deposit
+            elif selection==3:
+                 amt=float(input("enter amount to deposit"))
+                 ver_deposit=input(f"is this correct amount,{amt}? (yes/no)")
+                 if ver_deposit.lower()=="yes":
+                     accountObj.deposit(amt)
+                     print(f"\ndeposit succsessful.updated balance:{accountObj.getbalance()}")
+                 else:
+                     print("transaction cancelled")
+
+                 
+                
+
+
+#Exit
+            elif selection==4:
+                print("transaction complete")
+                print("transaction number",random.randint(10000000,1000000000))
+                print("Thank You")
+                break
+            else:
+                print("Invalid selection")
+
+
+# call main function
+main()
